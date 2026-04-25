@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_nawaem_report_tree" model="ir.ui.view">
+        <field name="name">nawaem.report.tree</field>
+        <field name="model">nawaem.report</field>
+        <field name="arch" type="xml">
+            <tree decoration-info="state == 'draft'" decoration-warning="state == 'open'" decoration-success="state == 'resolved'">
+                <field name="name"/>
+                <field name="reporter_id"/>
+                <field name="reported_id"/>
+                <field name="reason_type"/>
+                <field name="state" widget="badge"/>
+                <field name="create_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_nawaem_report_form" model="ir.ui.view">
+    
+        <field name="name">nawaem.report.form</field>
+        <field name="model">nawaem.report</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_investigate" string="Start Investigation" type="object" invisible="state != 'draft'" class="btn-primary"/>
+                    <button name="action_resolve" string="Resolve" type="object" invisible="state != 'open'" class="btn-success"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,open,resolved"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="reporter_id"/>
+                            <field name="reported_id"/>
+                        </group>
+                        <group>
+                            <field name="order_id"/>
+                            <field name="reason_type"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Details" name="details">
+                            <field name="description" placeholder="Write more details..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_nawaem_report" model="ir.actions.act_window">
+        <field name="name">Reports</field>
+        <field name="res_model">nawaem.report</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_nawaem_reports_action" 
+              name="بلاغات التطبيق" 
+              parent="nawaem_core.menu_nawaem_root" 
+              action="action_nawaem_report" 
+              sequence="50"/>
+</odoo>
