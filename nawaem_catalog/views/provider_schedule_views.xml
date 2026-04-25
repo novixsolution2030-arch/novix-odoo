@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_nawaem_provider_schedule_tree" model="ir.ui.view">
+        <field name="name">nawaem.provider.schedule.tree</field>
+        <field name="model">nawaem.provider.schedule</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom" decoration-muted="not is_active_day">
+                <field name="provider_id"/>
+                <field name="day_of_week"/>
+                <field name="start_time" widget="float_time"/>
+                <field name="end_time" widget="float_time"/>
+                <field name="is_active_day" widget="boolean_toggle"/>
+            </tree>
+        </field>
+    </record>
+    <record id="view_nawaem_provider_schedule_form" model="ir.ui.view">
+    <field name="name">nawaem.provider.schedule.form</field>
+    <field name="model">nawaem.provider.schedule</field>
+    <field name="arch" type="xml">
+        <form>
+            <sheet>
+                <group>
+                    <group>
+                        <field name="provider_id"/>
+                        <field name="day_of_week"/>
+                    </group>
+                    <group>
+                        <field name="start_time" widget="float_time"/>
+                        <field name="end_time" widget="float_time"/>
+                        <field name="is_active_day" widget="boolean_toggle"/>
+                    </group>
+                </group>
+            </sheet>
+        </form>
+    </field>
+</record>
+
+    <record id="view_nawaem_provider_schedule_search" model="ir.ui.view">
+        <field name="name">nawaem.provider.schedule.search</field>
+        <field name="model">nawaem.provider.schedule</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="provider_id"/>
+                <field name="day_of_week"/>
+                <filter string="الأيام النشطة" name="active_days" domain="[('is_active_day', '=', True)]"/>
+                <group expand="0" string="تجميع حسب">
+                    <filter string="المزود" name="group_by_provider" context="{'group_by': 'provider_id'}"/>
+                    <filter string="اليوم" name="group_by_day" context="{'group_by': 'day_of_week'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_nawaem_provider_schedule" model="ir.actions.act_window">
+        <field name="name">جداول عمل المزودين</field>
+        <field name="res_model">nawaem.provider.schedule</field>
+        <field name="view_mode">tree</field>
+        <field name="context">{'search_default_group_by_provider': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                قم بإضافة أوقات عمل المزودين هنا لكي تظهر المواعيد المتاحة للعملاء في التطبيق.
+            </p>
+        </field>
+    </record>
+
+    
+</odoo>

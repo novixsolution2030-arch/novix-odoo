@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_delivery_merchants_root" name="Merchants" parent="novix_delivery_core.menu_delivery_root" sequence="20"/>
+    
+    <menuitem id="menu_delivery_merchants_list" name="All Merchants" parent="menu_delivery_merchants_root" action="action_delivery_merchants" sequence="10"/>
+    
+    <menuitem id="menu_delivery_merchant_config" name="Merchant Settings" parent="novix_delivery_core.menu_delivery_configuration" sequence="20"/>
+    <menuitem id="menu_delivery_merchant_categories" name="Categories" parent="menu_delivery_merchant_config" action="action_merchant_categories" sequence="10"/>
+</odoo>

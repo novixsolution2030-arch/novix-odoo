@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_delivery_customers" model="ir.actions.act_window">
+        <field name="name">App Customers</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="domain">[('is_app_customer', '=', True)]</field>
+        <field name="context">{'default_is_app_customer': True, 'default_customer_rank': 1}</field>
+    </record>
+
+    <record id="view_partner_form_inherit_customer" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit.customer</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            
+            <xpath expr="//widget[@name='web_ribbon']" position="after">
+                <widget name="web_ribbon" title="Verified Customer" bg_color="text-bg-success" invisible="not is_app_customer or not is_phone_verified"/>
+                <widget name="web_ribbon" title="Unverified" bg_color="text-bg-danger" invisible="not is_app_customer or is_phone_verified"/>
+            </xpath>
+            
+            <xpath expr="//field[@name='vat']" position="after">
+                <field name="is_app_customer"/>
+                <field name="is_phone_verified" invisible="not is_app_customer"/>
+            </xpath>
+
+            <xpath expr="//field[@name='child_ids']/form//field[@name='name']" position="before">
+                <field name="address_label" invisible="type != 'delivery'"/>
+            </xpath>
+            <xpath expr="//field[@name='child_ids']/form//field[@name='mobile']" position="after">
+                <field name="address_lat" invisible="type != 'delivery'"/>
+                <field name="address_lng" invisible="type != 'delivery'"/>
+            </xpath>
+            
+        </field>
+    </record>
+</odoo>

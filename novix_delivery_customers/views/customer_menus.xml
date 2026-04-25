@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_delivery_customers_root" name="Customers" parent="novix_delivery_core.menu_delivery_root" sequence="40"/>
+    
+    <menuitem id="menu_delivery_customers_list" name="App Customers" parent="menu_delivery_customers_root" action="action_delivery_customers" sequence="10"/>
+</odoo>

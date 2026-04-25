@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_nawaem_waitlist_tree" model="ir.ui.view">
+        <field name="name">nawaem.waitlist.tree</field>
+        <field name="model">nawaem.waitlist</field>
+        <field name="arch" type="xml">
+            <tree string="قائمة الانتظار" decoration-info="status == 'pending'" decoration-success="status == 'notified'" decoration-muted="status == 'cancelled'">
+                <field name="customer_id" widget="many2one_avatar"/>
+                <field name="provider_id" widget="many2one_avatar"/>
+                <field name="requested_date"/>
+                <field name="status" widget="badge" decoration-info="status == 'pending'" decoration-success="status == 'notified'"/>
+                <field name="create_date" string="تاريخ التسجيل"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_nawaem_waitlist_search" model="ir.ui.view">
+        <field name="name">nawaem.waitlist.search</field>
+        <field name="model">nawaem.waitlist</field>
+        <field name="arch" type="xml">
+            <search string="بحث في قائمة الانتظار">
+                <field name="customer_id"/>
+                <field name="provider_id"/>
+                <filter string="في الانتظار" name="pending" domain="[('status', '=', 'pending')]"/>
+                <filter string="تم الإشعار" name="notified" domain="[('status', '=', 'notified')]"/>
+                <group expand="0" string="تجميع حسب">
+                    <filter string="المزودة" name="group_by_provider" context="{'group_by': 'provider_id'}"/>
+                    <filter string="التاريخ" name="group_by_date" context="{'group_by': 'requested_date'}"/>
+                    <filter string="الحالة" name="group_by_status" context="{'group_by': 'status'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_nawaem_waitlist_form" model="ir.ui.view">
+        <field name="name">nawaem.waitlist.form</field>
+        <field name="model">nawaem.waitlist</field>
+        <field name="arch" type="xml">
+            <form string="تفاصيل طلب الانتظار">
+                <header>
+                    <field name="status" widget="statusbar" statusbar_visible="pending,notified"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group string="معلومات العميل">
+                            <field name="customer_id" options="{'no_create': True}"/>
+                            <field name="requested_date"/>
+                        </group>
+                        <group string="معلومات المزودة">
+                            <field name="provider_id" options="{'no_create': True}"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_nawaem_waitlist" model="ir.actions.act_window">
+        <field name="name">قائمة الانتظار (أعلمني)</field>
+        <field name="res_model">nawaem.waitlist</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{'search_default_pending': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                لا توجد طلبات انتظار حالياً.
+            </p>
+            <p>
+                ستظهر هنا طلبات العملاء الذين يرغبون في الحصول على إشعار فور فتح حجوزات خبيرة معينة.
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_nawaem_waitlist" 
+              name="قائمة الانتظار" 
+              parent="menu_interaction" 
+              action="action_nawaem_waitlist" 
+              sequence="50"/>
+</odoo>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_partner_form_inherit_nawaem" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit.nawaem</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='vat']" position="after">
+                <field name="user_type" widget="radio" options="{'horizontal': true}"/>
+                <field name="unique_code" invisible="user_type == 'customer'"/>
+                <field name="commercial_name" invisible="user_type == 'customer'"/>
+                <field name="national_id" invisible="user_type != 'customer'"/>
+                <field name="commercial_register" invisible="user_type != 'customer'"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_res_partner_filter_inherit_nawaem" model="ir.ui.view">
+        <field name="name">res.partner.search.inherit.nawaem</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='type_company']" position="after">
+                <separator/>
+                <filter string="العملاء" name="filter_customers" domain="[('user_type', '=', 'customer')]"/>
+                <filter string="مزودي الخدمة" name="filter_providers" domain="[('user_type', '=', 'provider')]"/>
+                <filter string="الوكلاء" name="filter_agents" domain="[('user_type', '=', 'agent')]"/>
+            </xpath>
+        </field>
+    </record>
+     <menuitem id="menu_nawaem_root" name="نواعم" sequence="1"/>
+</odoo>

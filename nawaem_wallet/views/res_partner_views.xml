@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_partner_form_inherit_nawaem_wallet" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit.nawaem.wallet</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="nawaem_core.view_partner_form_inherit_nawaem"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='unique_code']" position="after">
+                <field name="wallet_balance" invisible="user_type == 'customer'" readonly="1"/>
+                <field name="is_available" invisible="user_type == 'expert'" />
+            </xpath>
+        </field>
+    </record>
+</odoo>

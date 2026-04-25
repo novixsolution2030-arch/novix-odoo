@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_delivery_drivers_root" name="Drivers" parent="novix_delivery_core.menu_delivery_root" sequence="30"/>
+    
+    <menuitem id="menu_delivery_drivers_list" name="All Drivers" parent="menu_delivery_drivers_root" action="action_delivery_drivers" sequence="10"/>
+</odoo>

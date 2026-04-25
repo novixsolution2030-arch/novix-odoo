@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_nawaem_category" model="ir.actions.act_window">
+        <field name="name">الأقسام</field>
+        <field name="res_model">nawaem.category</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="action_nawaem_service" model="ir.actions.act_window">
+        <field name="name">الخدمات</field>
+        <field name="res_model">nawaem.service</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="action_nawaem_product" model="ir.actions.act_window">
+        <field name="name">المنتجات</field>
+        <field name="res_model">nawaem.product</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="action_nawaem_portfolio" model="ir.actions.act_window">
+        <field name="name">معرض الأعمال</field>
+        <field name="res_model">nawaem.portfolio</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_nawaem_catalog_root" name="الكتالوج" parent="nawaem_core.menu_nawaem_root" sequence="2"/>
+    
+    <menuitem id="menu_nawaem_category" name="الأقسام" parent="menu_nawaem_catalog_root" action="action_nawaem_category" sequence="1"/>
+    <menuitem id="menu_nawaem_service" name="الخدمات" parent="menu_nawaem_catalog_root" action="action_nawaem_service" sequence="2"/>
+    <menuitem id="menu_nawaem_product" name="المنتجات" parent="menu_nawaem_catalog_root" action="action_nawaem_product" sequence="3"/>
+    <menuitem id="menu_nawaem_portfolio" name="معرض الأعمال" parent="menu_nawaem_catalog_root" action="action_nawaem_portfolio" sequence="4"/>
+    <menuitem id="menu_expert_image" name="صور الخبيرات" parent="menu_nawaem_catalog_root" action="action_nawaem_expert_image" sequence="4"/>
+     <menuitem id="menu_nawaem_provider_schedule" 
+              name="أوقات العمل" 
+              parent="menu_nawaem_catalog_root"
+              action="action_nawaem_provider_schedule" 
+              sequence="10"/>
+</odoo>

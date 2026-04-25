@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_delivery_orders" model="ir.actions.act_window">
+        <field name="name">Delivery Orders</field>
+        <field name="res_model">delivery.order</field>
+        <field name="view_mode">tree,form,kanban</field>
+    </record>
+
+    <record id="view_delivery_order_form" model="ir.ui.view">
+        <field name="name">delivery.order.form</field>
+        <field name="model">delivery.order</field>
+        <field name="arch" type="xml">
+            <form string="Delivery Order">
+               <header>
+                    <button name="action_submit_order" string="Send to Merchant" type="object" class="oe_highlight" invisible="state != 'draft' or order_type == 'ride'"/>
+                    
+                    <button name="action_submit_order" string="Request Ride (Start Bidding)" type="object" class="oe_highlight" invisible="state != 'draft' or order_type != 'ride'"/>
+                    
+                    <button name="action_merchant_accept" string="Merchant Accept" type="object" class="btn-success" invisible="state != 'pending_merchant' or order_type == 'ride'"/>
+                    
+                    <button name="action_start_bidding" string="Start Driver Bidding" type="object" class="oe_highlight" invisible="state != 'merchant_accepted'"/>
+                    
+                    <button name="action_cancel_order" string="Cancel" type="object" class="btn-danger" invisible="state in ('delivered', 'cancelled')"/>
+                    
+                    <field name="state" widget="statusbar" statusbar_visible="draft,pending_merchant,merchant_accepted,bidding,delivering,delivered"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="Core Details">
+                            <field name="order_type" readonly="state != 'draft'"/>
+                            <field name="customer_id" readonly="state != 'draft'"/>
+                            
+                            <field name="merchant_id" 
+                                   invisible="order_type == 'ride'" 
+                                   required="order_type != 'ride'" 
+                                   readonly="state != 'draft'"/>
+                                   
+                            <field name="driver_id" readonly="state not in ('draft', 'pending_merchant', 'merchant_accepted', 'bidding')"/>
+                        </group>
+                        <group string="Payment &amp; Logistics">
+                            <field name="payment_method" readonly="state != 'draft'"/>
+                            <field name="payment_status" readonly="1" force_save="1"/>
+                            <field name="distance_km" readonly="state != 'draft'"/>
+                            <label for="dropoff_lat" string="Dropoff Coordinates"/>
+                            <div class="o_row">
+                                <field name="dropoff_lat" placeholder="Lat" readonly="state != 'draft'"/>
+                                <span>, </span>
+                                <field name="dropoff_lng" placeholder="Lng" readonly="state != 'draft'"/>
+                            </div>
+                        </group>
+                    </group>
+                    
+                    <notebook>
+                        <page string="Cart Items (Order Lines)" name="cart_lines" invisible="order_type == 'ride'">
+                            <field name="order_line_ids" readonly="state != 'draft'">
+                                <tree editable="bottom">
+                                    <field name="product_id"/>
+                                    <field name="name"/>
+                                    <field name="quantity"/>
+                                    <field name="price_unit"/>
+                                    <field name="price_subtotal" readonly="1"/>
+                                </tree>
+                            </field>
+                            <group class="oe_subtotal_footer oe_right">
+                                <field name="goods_cost"/>
+                                <field name="delivery_fee" readonly="state in ('delivered', 'cancelled')"/>
+                                <field name="system_commission_amount" readonly="1"/>
+                                <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                                    <label for="total_amount"/>
+                                </div>
+                                <field name="total_amount" nolabel="1" class="oe_subtotal_footer_separator" readonly="1"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_delivery_order_tree" model="ir.ui.view">
+        <field name="name">delivery.order.tree</field>
+        <field name="model">delivery.order</field>
+        <field name="arch" type="xml">
+            <tree string="Delivery Orders">
+                <field name="name"/>
+                <field name="create_date"/>
+                <field name="customer_id"/>
+                <field name="merchant_id"/>
+                <field name="order_type" widget="badge"/>
+                <field name="payment_method"/>
+                <field name="total_amount"/>
+                <field name="state" widget="badge" 
+                       decoration-muted="state == 'draft'"
+                       decoration-warning="state == 'pending_merchant'"
+                       decoration-info="state == 'bidding'" 
+                       decoration-success="state == 'delivered'"/>
+            </tree>
+        </field>
+    </record>
+</odoo>

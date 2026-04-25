@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_partner_form_inherit_nawaem_unified" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit.nawaem.unified</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            
+            <xpath expr="//field[@name='vat']" position="after">
+                <field name="user_type" widget="badge"/>
+                <field name="unique_code" readonly="1" force_save="1"/>
+            </xpath>
+
+            <xpath expr="//notebook" position="inside">
+                <page string="بيانات تطبيق نواعم" name="nawaem_app_data">
+                    <group>
+                        <group string="البيانات الأساسية والمالية">
+                            <field name="wallet_balance" readonly="1" force_save="1"/>
+                            <field name="nawaem_password" password="True"/>
+                        </group>
+                        
+                        <group string="الموقع الجغرافي (GPS)">
+                            <field name="nawaem_latitude"/>
+                            <field name="nawaem_longitude"/>
+                        </group>
+
+                        <group string="البيانات التجارية والقانونية" invisible="user_type not in ('provider', 'agent')">
+                            <field name="commercial_name"/>
+                            <field name="national_id"/>
+                            <field name="commercial_register"/>
+                        </group>
+
+                        <group string="إعدادات الريلز والاشتراكات" invisible="user_type != 'salon'">
+                            <field name="is_subscribed" widget="boolean_toggle"/>
+                            <field name="subscription_end_date"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+
+        </field>
+    </record>
+    <record id="view_nawaem_reel_tree" model="ir.ui.view">
+        <field name="name">nawaem.reel.tree</field>
+        <field name="model">nawaem.reel</field>
+        <field name="arch" type="xml">
+            <tree decoration-info="state == 'pending'" decoration-success="state == 'published'" decoration-danger="state == 'rejected'">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="salon_id"/>
+                <field name="views_count"/>
+                <field name="calls_count"/>
+                <field name="state" widget="badge" 
+                       decoration-info="state == 'pending'" 
+                       decoration-success="state == 'published'" 
+                       decoration-danger="state == 'rejected'"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_nawaem_reel_form" model="ir.ui.view">
+        <field name="name">nawaem.reel.form</field>
+        <field name="model">nawaem.reel</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_approve" string="موافقة واعتماد" type="object" class="oe_highlight" invisible="state != 'pending'"/>
+                    <button name="action_reject" string="رفض" type="object" class="btn-danger" invisible="state != 'pending'"/>
+                    
+                    <field name="state" widget="statusbar" statusbar_visible="draft,pending,approved,published"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="عنوان الفيديو..."/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="بيانات الصالون والمحتوى">
+                            <field name="salon_id"/>
+                            <field name="salon_name"/>
+                            <field name="youtube_id"/>
+                            <field name="temp_video_path" readonly="1"/>
+                        </group>
+                        <group string="إعدادات الظهور">
+                            <field name="sequence"/>
+                            <field name="active" widget="boolean_toggle"/>
+                            <field name="create_date" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="الوصف والهاشتاقات">
+                            <field name="description"/>
+                        </page>
+                        <page string="إحصائيات الأداء (Live)">
+                            <group>
+                                <group>
+                                    <field name="views_count" readonly="1"/>
+                                    <field name="calls_count" readonly="1"/>
+                                </group>
+                                <group>
+                                    <field name="likes_count" readonly="1"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_nawaem_reel_all" model="ir.actions.act_window">
+        <field name="name">إدارة الريلز</field>
+        <field name="res_model">nawaem.reel</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

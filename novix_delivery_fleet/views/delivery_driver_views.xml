@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_partner_form_inherit_driver" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit.driver</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            
+            <xpath expr="//sheet" position="before">
+                <header>
+                    <button name="action_unbind_device" 
+                            type="object" 
+                            string="Unbind Device" 
+                            class="btn-warning" 
+                            invisible="not registered_device_id" 
+                            groups="novix_delivery_core.group_delivery_manager"
+                            confirm="هل أنت متأكد من فك ارتباط جهاز المندوب؟ هذا سيسمح له بالدخول من هاتف آخر."/>
+                </header>
+            </xpath>
+
+            <xpath expr="//widget[@name='web_ribbon']" position="after">
+                <widget name="web_ribbon" title="Driver" bg_color="text-bg-info" invisible="not is_driver"/>
+            </xpath>
+            
+            <xpath expr="//field[@name='vat']" position="after">
+                <field name="is_driver"/>
+                <field name="national_id" invisible="not is_driver" required="is_driver"/>
+                <field name="verification_status" invisible="not is_driver"/>
+            </xpath>
+
+            <xpath expr="//notebook" position="inside">
+                <page string="Fleet &amp; Tracking" name="driver_operations" invisible="not is_driver">
+                    <group>
+                        <group string="Operational Data">
+                            <field name="driver_status"/>
+                            <field name="vehicle_id"/>
+                        </group>
+                        <group string="Security &amp; Live Location">
+                            <field name="registered_device_id" readonly="1" force_save="1"/>
+                            <field name="current_lat" readonly="1"/>
+                            <field name="current_lng" readonly="1"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+     <record id="action_delivery_drivers" model="ir.actions.act_window">
+        <field name="name">Drivers</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="domain">[('is_driver', '=', True)]</field>
+        <field name="context">{'default_is_driver': True}</field>
+    </record>
+</odoo>

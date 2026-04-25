@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_delivery_orders_root" name="Orders" parent="novix_delivery_core.menu_delivery_root" sequence="10"/>
+    
+    <menuitem id="menu_delivery_orders_active" name="All Orders" parent="menu_delivery_orders_root" action="action_delivery_orders" sequence="10"/>
+</odoo>

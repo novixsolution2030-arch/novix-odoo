@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_nawaem_portfolio_form" model="ir.ui.view">
+        <field name="name">nawaem.portfolio.form</field>
+        <field name="model">nawaem.portfolio</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="provider_id"/>
+                            <field name="category_id"/>
+                        </group>
+                        <group>
+                            <field name="media_type" widget="radio"/>
+                            <field name="image" widget="image" class="oe_avatar" invisible="media_type == 'video'"/>
+                            <field name="video_url" widget="url" invisible="media_type == 'image'"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_nawaem_portfolio_tree" model="ir.ui.view">
+        <field name="name">nawaem.portfolio.tree</field>
+        <field name="model">nawaem.portfolio</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="provider_id"/>
+                <field name="media_type"/>
+            </tree>
+        </field>
+    </record>
+    <record id="view_nawaem_expert_image_tree" model="ir.ui.view">
+        <field name="name">nawaem.expert.image.tree</field>
+        <field name="model">nawaem.expert.image</field>
+        <field name="arch" type="xml">
+            <tree string="صور الخبيرات">
+                <field name="partner_id"/>
+                <field name="app_image" widget="image" options="{'size': [50, 50]}"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_nawaem_expert_image_form" model="ir.ui.view">
+        <field name="name">nawaem.expert.image.form</field>
+        <field name="model">nawaem.expert.image</field>
+        <field name="arch" type="xml">
+            <form string="إضافة صورة خبيرة">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="partner_id" options="{'no_create': True}"/>
+                        </group>
+                        <group>
+                            <field name="app_image" widget="image" class="oe_avatar"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="معلومات إضافية">
+                            <field name="notes" placeholder="أضف أي ملاحظات هنا..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_nawaem_expert_image" model="ir.actions.act_window">
+        <field name="name">صور تطبيق نواعيم</field>
+        <field name="res_model">nawaem.expert.image</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

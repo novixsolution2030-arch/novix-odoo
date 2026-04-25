@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_nawaem_feedback_root" 
+              name="الدعم والمقترحات" 
+              sequence="10" 
+              parent="nawaem_core.menu_nawaem_root"
+              />
+
+    <menuitem id="menu_nawaem_feedback_list" 
+              name="قائمة الطلبات" 
+              parent="menu_nawaem_feedback_root" 
+              action="action_nawaem_feedback" 
+              sequence="1"/>
+</odoo>

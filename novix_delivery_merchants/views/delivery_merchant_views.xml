@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="action_delivery_merchants" model="ir.actions.act_window">
+        <field name="name">Merchants</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="domain">[('is_merchant', '=', True)]</field>
+        <field name="context">{'default_is_merchant': True}</field>
+    </record>
+
+    <record id="action_merchant_categories" model="ir.actions.act_window">
+        <field name="name">Merchant Categories</field>
+        <field name="res_model">delivery.merchant.category</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <record id="view_delivery_merchant_category_tree" model="ir.ui.view">
+        <field name="name">delivery.merchant.category.tree</field>
+        <field name="model">delivery.merchant.category</field>
+        <field name="arch" type="xml">
+            <tree string="Merchant Categories">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="active" widget="boolean_toggle"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_partner_form_inherit_merchant" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit.merchant</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="%(action_delivery_merchants)d" 
+                        type="action" 
+                        class="oe_stat_button" 
+                        icon="fa-sitemap" 
+                        context="{'search_default_parent_id': id, 'default_parent_id': id, 'default_merchant_type': 'branch', 'default_is_merchant': True}"
+                        invisible="not is_merchant or merchant_type != 'main'">
+                    <field name="branches_count" widget="statinfo" string="Branches"/>
+                </button>
+            </xpath>
+
+            <xpath expr="//widget[@name='web_ribbon']" position="after">
+                <widget name="web_ribbon" title="Merchant HQ" bg_color="text-bg-success" invisible="not is_merchant or merchant_type != 'main'"/>
+                <widget name="web_ribbon" title="Branch" bg_color="text-bg-info" invisible="not is_merchant or merchant_type != 'branch'"/>
+            </xpath>
+            
+            <xpath expr="//field[@name='vat']" position="after">
+                <field name="is_merchant"/>
+                <field name="merchant_type" invisible="not is_merchant" required="is_merchant"/>
+            </xpath>
+
+            <xpath expr="//notebook" position="inside">
+                <page string="Delivery Operations" name="merchant_operations" invisible="not is_merchant">
+                    <group string="App Branding">
+                        <field name="merchant_banner" widget="image" options="{'size': [600, 200]}" class="oe_avatar" nolabel="1"/>
+                    </group>
+                    
+                    <group>
+                        <group string="Operational Status">
+                            <field name="is_open" widget="boolean_toggle"/>
+                            <field name="preparation_time"/>
+                            <field name="merchant_category_ids" widget="many2many_tags"/>
+                        </group>
+                        <group string="Location Data">
+                            <field name="store_lat"/>
+                            <field name="store_lng"/>
+                        </group>
+                        <group string="Financials">
+                            <field name="custom_commission_rate"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

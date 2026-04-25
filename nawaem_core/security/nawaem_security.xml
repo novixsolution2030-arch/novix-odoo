@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.module.category" id="module_category_nawaem">
+        <field name="name">Nawaem App</field>
+        <field name="description">صلاحيات تطبيق نواعم</field>
+        <field name="sequence">10</field>
+    </record>
+
+    <record id="group_nawaem_manager" model="res.groups">
+        <field name="name">Nawaem Manager</field>
+        <field name="category_id" ref="module_category_nawaem"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+</odoo>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+
+    <menuitem id="menu_nawaem_salon_root" name="الصالونات والإعلانات" parent="nawaem_core.menu_nawaem_root" sequence="5"/>
+    <menuitem id="menu_nawaem_reels_manage" name="الفيديوهات والمراجعة" parent="menu_nawaem_salon_root" action="action_nawaem_reel_all" sequence="1"/>
+</odoo>

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="action_nawaem_order" model="ir.actions.act_window">
+            <field name="name">طلبات نواعم</field>
+            <field name="res_model">nawaem.order</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    قم بإنشاء أول طلب في نظام نواعم!
+                </p>
+            </field>
+        </record>
+
+        <record id="view_nawaem_order_tree" model="ir.ui.view">
+            <field name="name">nawaem.order.tree</field>
+            <field name="model">nawaem.order</field>
+            <field name="arch" type="xml">
+                <tree string="طلبات نواعم" decoration-info="state == 'draft'" decoration-warning="state == 'pending'" decoration-success="state == 'completed'" decoration-danger="state in ('rejected', 'cancelled')">
+                    <field name="name" readonly="1" decoration-bf="1"/>
+                    <field name="customer_id" widget="many2one_avatar"/>
+                    <field name="provider_id" widget="many2one_avatar" optional="show"/>
+                    <field name="order_type" widget="badge"/>
+                    <field name="total_amount" sum="إجمالي المبيعات" widget="monetary"/>
+                    <field name="state" widget="badge" decoration-info="state == 'draft'" decoration-warning="state == 'pending'" decoration-success="state == 'completed'" decoration-danger="state in ('rejected', 'cancelled')"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_nawaem_order_form" model="ir.ui.view">
+            <field name="name">nawaem.order.form</field>
+            <field name="model">nawaem.order</field>
+            <field name="arch" type="xml">
+                <form string="طلب نواعم">
+                    <header>
+                        <button name="action_send_to_provider" string="إرسال للمزود" type="object" class="oe_highlight" invisible="state != 'draft' or not order_line_ids"/>
+                        <button name="action_accept" string="قبول الطلب" type="object" class="btn-primary" invisible="state != 'pending'"/>
+                        <button name="action_reject" string="رفض الطلب" type="object" invisible="state != 'pending'"/>
+                        <button name="action_mark_arrived" string="تأكيد الوصول" type="object" class="oe_highlight" invisible="state != 'accepted'"/>
+                        <button name="action_complete" string="إكمال الطلب" type="object" class="oe_highlight" invisible="state != 'arrived'"/>
+                        <button name="action_cancel" string="إلغاء" type="object" invisible="state not in ('draft', 'pending')"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,pending,accepted,arrived,completed"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="%(action_nawaem_order)d" type="action" class="oe_stat_button" icon="fa-list-alt" invisible="not parent_id" context="{'search_default_id': parent_id}">
+                                <div class="o_stat_info">
+                                    <span class="o_stat_text">الطلب الأب</span>
+                                </div>
+                            </button>
+                            <button class="oe_stat_button" icon="fa-sitemap" invisible="not child_ids">
+                                <field name="child_ids" widget="statinfo" string="طلبات فرعية"/>
+                            </button>
+                        </div>
+                        
+                        <div class="oe_title">
+                            <span class="o_form_label">رقم الطلب</span>
+                            <h1><field name="name" readonly="1"/></h1>
+                        </div>
+                        <group>
+                            <group name="customer_info" string="بيانات العميل">
+                                <field name="customer_id" widget="res_partner_many2one" readonly="state != 'draft'"/>
+                                <field name="provider_id" widget="res_partner_many2one" readonly="state != 'draft'" invisible="parent_id"/>
+                                <field name="parent_id" readonly="1" invisible="not parent_id"/>
+                            </group>
+                            <group name="order_logistics" string="الجدولة">
+                                <field name="order_type" readonly="1"/>
+                                <field name="schedule_type" readonly="1"/>
+                                <field name="booking_date" readonly="state != 'draft'"/>
+                                <field name="start_time_float" widget="float_time" string="وقت البدء المختار"/>
+            <field name="end_time_float" widget="float_time" string="نهاية الخدمة المتوقعة" readonly="1"/>
+                            </group>
+                        </group>
+                        
+                        <notebook>
+                            <page string="عناصر السلة" name="order_lines">
+                                <field name="order_line_ids" readonly="state != 'draft'">
+                                    <tree editable="bottom">
+                                        <field name="line_type"/>
+                                        <field name="provider_id" readonly="1" optional="show"/>
+                                        <field name="service_id" invisible="line_type != 'service'"/>
+                                        <field name="product_id" invisible="line_type != 'product'"/>
+                                        <field name="quantity"/>
+                                        <field name="price_unit"/>
+                                        <field name="price_subtotal" sum="Total"/>
+                                    </tree>
+                                </field>
+                                <group class="oe_subtotal_footer oe_right">
+                                    <field name="subtotal" widget="monetary"/>
+                                    <field name="total_trip_fees" widget="monetary"/>
+                                    <field name="total_delivery_fees" widget="monetary"/>
+                                    <field name="total_amount" class="oe_subtotal_footer_separator" widget="monetary"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <menuitem id="menu_nawaem_orders" name="الطلبات" parent="nawaem_core.menu_nawaem_root" action="action_nawaem_order" sequence="20"/>
+
+    </data>
+</odoo>

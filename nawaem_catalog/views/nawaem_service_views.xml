@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_nawaem_service_form" model="ir.ui.view">
+        <field name="name">nawaem.service.form</field>
+        <field name="model">nawaem.service</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" placeholder="اسم الخدمة..."/></h1>
+                    </div>
+                    
+                    <group>
+                        <group string="معلومات المزود والقسم">
+                            <field name="provider_id"/>
+                            <field name="category_id"/>
+                            <field name="active" widget="boolean_toggle"/>
+                        </group>
+                        
+                        <group string="التسعير والتصنيف">
+                            <field name="price"/>
+                            <field name="max_persons"/>
+                            <field name="service_type" widget="radio" options="{'horizontal': true}"/>
+                        </group>
+                    </group>
+
+                    <group string="إدارة وقت الحجز (الجدولة)">
+                        <group>
+                            <field name="duration" 
+                                   invisible="service_type != 'fixed'" 
+                                   required="service_type == 'fixed'"
+                                   widget="float_time"
+                                   help="أدخل المدة بالدقائق (مثال: 60)"/>
+                            
+                            <field name="max_duration" 
+                                   invisible="service_type != 'variable'" 
+                                   required="service_type == 'variable'"
+                                   widget="float_time"
+                                   help="أدخل الحد الأقصى المتوقع بالدقائق لحجب الجدول"/>
+                        </group>
+                        <group>
+                            </group>
+                    </group>
+
+                    <notebook>
+                        <page string="الصور الإلزامية">
+                            <group>
+                                <group>
+                                    <field name="image_main" widget="image" class="oe_avatar"/>
+                                    <field name="image_sub_1" widget="image" class="oe_avatar"/>
+                                </group>
+                                <group>
+                                    <field name="image_sub_2" widget="image" class="oe_avatar"/>
+                                    <field name="image_sub_3" widget="image" class="oe_avatar"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="الوصف">
+                            <field name="description"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_nawaem_service_tree" model="ir.ui.view">
+        <field name="name">nawaem.service.tree</field>
+        <field name="model">nawaem.service</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="provider_id"/>
+                <field name="category_id"/>
+                <field name="service_type"/>
+                <field name="price"/>
+                <field name="active" widget="boolean_toggle"/>
+            </tree>
+        </field>
+    </record>
+</odoo>

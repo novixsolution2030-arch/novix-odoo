@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_delivery_menu_category_tree" model="ir.ui.view">
+        <field name="name">delivery.menu.category.tree</field>
+        <field name="model">delivery.menu.category</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="merchant_id"/>
+                <field name="active"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_delivery_menu_category_form" model="ir.ui.view">
+        <field name="name">delivery.menu.category.form</field>
+        <field name="model">delivery.menu.category</field>
+        <field name="arch" type="xml">
+            <form string="Menu Category">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="merchant_id"/>
+                        <field name="sequence"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

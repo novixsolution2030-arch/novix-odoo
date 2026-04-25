@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_wallet_transactions" name="Wallet Transactions" parent="novix_delivery_core.menu_delivery_finance" action="action_wallet_transactions" sequence="10"/>
+</odoo>

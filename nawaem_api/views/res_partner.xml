@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_partner_form_inherit_nawaem" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit.nawaem</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            
+            <xpath expr="//notebook" position="inside">
+                <page string="تطبيق نواعم" name="nawaem_app_info">
+                    <group>
+                        <group string="بيانات الدخول">
+                            <field name="nawaem_password" password="True"/>
+                            <field name="fcm_token" />
+                            <field name="temporary_close" />
+                            <field name="last_active_date" />
+                            
+
+                        </group>
+                        
+                        <group string="الموقع الجغرافي">
+                            <field name="nawaem_latitude"/>
+                            <field name="nawaem_longitude"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+
+        </field>
+    </record>
+</odoo>

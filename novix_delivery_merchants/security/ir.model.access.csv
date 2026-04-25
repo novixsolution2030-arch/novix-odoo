@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_delivery_merchant_category_user,delivery.merchant.category.user,model_delivery_merchant_category,novix_delivery_core.group_delivery_user,1,0,0,0
+access_delivery_merchant_category_admin,delivery.merchant.category.admin,model_delivery_merchant_category,novix_delivery_core.group_delivery_manager,1,1,1,1

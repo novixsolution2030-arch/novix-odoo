@@ -1,0 +1,146 @@
+<odoo>
+    <!-- =======================
+         ACTIONS
+         ======================= -->
+   
+    <!-- =======================
+         VIEWS
+         ======================= -->
+
+    <!-- Tree Views -->
+    <record id="view_nawaem_review_tree" model="ir.ui.view">
+        <field name="name">nawaem.review.tree</field>
+        <field name="model">nawaem.review</field>
+        <field name="arch" type="xml">
+            <tree string="التقييمات والتعليقات">
+                <field name="customer_id"/>
+                <field name="provider_id"/>
+                <field name="service_id"/>
+                <field name="product_id"/>
+                <field name="rating"/>
+                <field name="create_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_nawaem_reel_interaction_tree" model="ir.ui.view">
+        <field name="name">nawaem.reel.interaction.tree</field>
+        <field name="model">nawaem.reel.interaction</field>
+        <field name="arch" type="xml">
+            <tree string="تفاعلات الريلز">
+                <field name="reel_id"/>
+                <field name="customer_id"/>
+                <field name="interaction_type"/>
+                <field name="create_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form Views -->
+    <record id="view_nawaem_review_form" model="ir.ui.view">
+        <field name="name">nawaem.review.form</field>
+        <field name="model">nawaem.review</field>
+        <field name="arch" type="xml">
+            <form string="التقييمات والتعليقات">
+                <sheet>
+                    <group>
+                    <field name="reel_id"/>
+                        <field name="customer_id"/>
+                        <field name="provider_id"/>
+                        <field name="service_id"/>
+                        <field name="product_id"/>
+                    </group>
+                    <group>
+                        <field name="rating"/>
+                        <field name="comment"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_nawaem_reel_interaction_form" model="ir.ui.view">
+        <field name="name">nawaem.reel.interaction.form</field>
+        <field name="model">nawaem.reel.interaction</field>
+        <field name="arch" type="xml">
+            <form string="تفاعلات الريلز">
+                <sheet>
+                    <group>
+                        <field name="reel_id"/>
+                        <field name="customer_id"/>
+                        <field name="interaction_type"/>
+                    </group>
+                    <group>
+                        <field name="comment_text"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search Views -->
+    <record id="view_nawaem_review_search" model="ir.ui.view">
+        <field name="name">nawaem.review.search</field>
+        <field name="model">nawaem.review</field>
+        <field name="arch" type="xml">
+            <search string="بحث في التقييمات">
+                <field name="customer_id"/>
+                <field name="provider_id"/>
+                <field name="service_id"/>
+                <field name="product_id"/>
+                <filter name="high" string="تقييم عالي" domain="[('rating','>=',4)]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_nawaem_reel_interaction_search" model="ir.ui.view">
+        <field name="name">nawaem.reel.interaction.search</field>
+        <field name="model">nawaem.reel.interaction</field>
+        <field name="arch" type="xml">
+            <search string="بحث في التفاعلات">
+                <field name="reel_id"/>
+                <field name="customer_id"/>
+                <filter name="like_only" string="إعجابات فقط" domain="[('interaction_type','=','like')]"/>
+                <filter name="share_only" string="مشاركات فقط" domain="[('interaction_type','=','share')]"/>
+                <filter name="comments_only" string="تعليقات فقط" domain="[('interaction_type','=','comment')]"/>
+            </search>
+        </field>
+    </record>
+ <record id="action_nawaem_review" model="ir.actions.act_window">
+        <field name="name">التقييمات والتعليقات</field>
+        <field name="res_model">nawaem.review</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p>هنا يمكن إدارة التقييمات والتعليقات الخاصة بالعملاء.</p>
+        </field>
+    </record>
+
+    <record id="action_nawaem_reel_interaction" model="ir.actions.act_window">
+        <field name="name">تفاعلات الريلز</field>
+        <field name="res_model">nawaem.reel.interaction</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p>هنا يمكن إدارة جميع التفاعلات على الريلز.</p>
+        </field>
+    </record>
+
+    <!-- =======================
+         MENU ITEMS تحت "إدارة الطلبات"
+         ======================= -->
+          <menuitem id="menu_interaction"
+              name="التفاعلات"
+              parent="nawaem_core.menu_nawaem_root"
+              sequence="1"/>
+    <menuitem id="menu_nawaem_review"
+              name="التقييمات والتعليقات"
+              parent="menu_interaction"
+              action="action_nawaem_review"
+              sequence="1"/>
+
+    <menuitem id="menu_nawaem_reel_interaction"
+              name="تفاعلات الريلز"
+              parent="menu_interaction"
+              action="action_nawaem_reel_interaction"
+              sequence="2"/>
+
+</odoo>

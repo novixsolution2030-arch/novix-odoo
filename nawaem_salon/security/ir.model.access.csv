@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_nawaem_reel_manager,nawaem.reel.manager,model_nawaem_reel,nawaem_core.group_nawaem_manager,1,1,1,1

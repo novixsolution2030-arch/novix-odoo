@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_nawaem_address_list" 
+              name="عناوين العملاء" 
+              parent="nawaem_core.menu_nawaem_root" 
+              action="action_nawaem_address" 
+              sequence="20"/>
+</odoo>

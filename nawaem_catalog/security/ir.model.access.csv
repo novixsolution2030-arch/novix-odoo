@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_nawaem_category_manager,nawaem.category.manager,model_nawaem_category,nawaem_core.group_nawaem_manager,1,1,1,1
+access_nawaem_service_manager,nawaem.service.manager,model_nawaem_service,nawaem_core.group_nawaem_manager,1,1,1,1
+access_nawaem_product_manager,nawaem.product.manager,model_nawaem_product,nawaem_core.group_nawaem_manager,1,1,1,1
+access_nawaem_portfolio_manager,nawaem.portfolio.manager,model_nawaem_portfolio,nawaem_core.group_nawaem_manager,1,1,1,1
+access_nawaem_exper_image_manager,nawaem.expert.image,model_nawaem_expert_image,nawaem_core.group_nawaem_manager,1,1,1,1
+access_nawaem_provider_schedule_manager,nawaem.provider.schedule,model_nawaem_provider_schedule,nawaem_core.group_nawaem_manager,1,1,1,1

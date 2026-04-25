@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_nawaem_address_tree" model="ir.ui.view">
+        <field name="name">nawaem.address.tree</field>
+        <field name="model">nawaem.address</field>
+        <field name="arch" type="xml">
+            <tree decoration-success="is_default==True">
+                <field name="customer_id"/>
+                <field name="address_type"/>
+                <field name="title"/>
+                <field name="full_address"/>
+                <field name="is_default" widget="boolean_toggle"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_nawaem_address_form" model="ir.ui.view">
+        <field name="name">nawaem.address.form</field>
+        <field name="model">nawaem.address</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="title" placeholder="عنوان مختصر (مثال: منزلي)"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="customer_id"/>
+                            <field name="address_type" widget="radio" options="{'horizontal': true}"/>
+                            <field name="is_default" widget="boolean_toggle"/>
+                        </group>
+                        <group>
+                            <field name="latitude"/>
+                            <field name="longitude"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="العنوان التفصيلي">
+                            <field name="full_address" placeholder="أدخل تفاصيل العنوان، اسم الشارع، رقم العمارة..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_nawaem_address" model="ir.actions.act_window">
+        <field name="name">عناوين العملاء</field>
+        <field name="res_model">nawaem.address</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

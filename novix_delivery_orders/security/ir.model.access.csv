@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_delivery_order_user,delivery.order.user,model_delivery_order,novix_delivery_core.group_delivery_user,1,1,1,0
+access_delivery_order_manager,delivery.order.manager,model_delivery_order,novix_delivery_core.group_delivery_manager,1,1,1,1

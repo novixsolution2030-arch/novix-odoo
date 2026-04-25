@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_nawaem_review,nawaem.review,model_nawaem_review,,1,1,1,1
+access_nawaem_reel_interaction,nawaem.reel.interaction,model_nawaem_reel_interaction,,1,1,1,1
+access_nawaem_waitlist_user,nawaem.waitlist.user,model_nawaem_waitlist,base.group_user,1,1,1,0
+access_nawaem_waitlist_manager,nawaem.waitlist.manager,model_nawaem_waitlist,base.group_system,1,1,1,1
